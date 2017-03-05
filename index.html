@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+        <title>方丈记</title>
+        
+         <style type="text/css">
+
+           *{padding:0;
+            margin:0;}/*设置全局 padding为内边距，margin为外边距，此处贫僧还是晓得的。*/
+           body{
+                background-color:#fff;
+                color:#555;
+                font-family:'Avenir Next','lantinghei SC';
+                font-size:14px;
+                -webkit-font-smoothing:antialiased;
+                
+           }/*设置主体样式，“-wenkit-font...”这句是为了让字体变平滑些，此处贫僧也还是晓得的*/
+   .wrap{
+           width:100%;
+           height:600px;
+           position:absolute;
+           top:50%;
+           margin-top:-300px;
+           background-color:purple;
+           overflow:hidden;   
+           -webkit-perspective:800px;
+           
+}/*设置主框架，也就是你在啥地方里面折腾。"overflow:hidden"为翻转后隐藏，"-webkit-perspective:800px"配置3D属性，此处贫僧还能战。*/
+  /*海报样式*/
+   .photo{
+           width:260px;
+           height:320px;
+           position:absolute;
+           z-index:1;
+           box-shadow:0 0 1px rgba(0,0,0,.01);
+           transition:  all .5s;
+           -moz-transition: all .5s;/*Firefox 4*/
+           -o-transition: all .5s;/* Safari和Chrome*/
+           -webkit-transition: all .5s;/*Opera*/
+           left:50%;
+           right:50%;
+           margin: -160px 0 0 -130px;
+         
+          }/*rgba，rgb为三原色，a为Alpha的色彩空间，然而究竟它是干什么的，贫僧不知道啊！*/
+      .photo  .photo-wrap  .side{
+            width:100%;
+            height:100%;
+            background-color:#555;
+            position:absolute;
+            top:0;
+            right:0;
+            padding:20px;
+            box-sizing:border-box;
+            -moz-box-sizing：border-box;
+            backface-visibility:hidden;
+            -webkit-backface-visibility:hidden; 
+            -moz-backface-visibility:hidden;     
+            -ms-backface-visibility:hidden;/*最后几句依然是为浏览器兼容着想，一个意思*/
+          }
+    .photo  .photo-wrap  .side-front{
+               /*考虑到了各种浏览器,然而我ME表示不服*/
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+    }
+    .photo  .photo-wrap  .side-front .image{
+      width:100%;
+      height:250px;
+      line-height:250px;
+      overflow:hidden;
+      }/*pass*/
+     .photo  .photo-wrap  .side-front .image img{
+         width:100%;
+         vertical-align: center;/*高度不够的图片局中显示*/
+     
+
+}/*pass*/
+     .photo  .photo-wrap  .side-front .caption{
+       color:orange;
+       text-align:center;
+       font-size:16px;
+       font-family:"华文行楷";
+       line-height: 50px;}/*pass*/
+
+    .photo  .photo-wrap  .side-back{
+                /*跟 .side-front一样*/
+                transform: rotateY(180deg);
+                -webkit-transform: rotateY(180deg);
+                -moz-transform: rotateY(180deg);
+                -o-transform: rotateY(180deg);
+                -ms-transform: rotateY(180deg);
+    }/*pass*/
+   .photo .photo-wrap   .side-back .desc{
+        color:white;
+        font-size:14px;
+        font-family:"楷体";
+        line-height:1.5em;
+        -webkit-font-smoothing:antialiased;
+                
+}/*pass*/
+       /*当前选中的海报样式*/
+
+        .photo_center{
+             /* width:260px;
+              height:320px;*/
+              left:50%;
+              top:50%;
+              margin:-160px 0 0 -130px;
+              z-index:2;
+           
+              }
+             /*负责翻转*/
+       .photo .photo-wrap{
+              position:absolute;
+              width:100%;
+              height:100%;
+              -webkit-transform-style:preserve-3d;
+              -webkit-transition:all .6s;
+              transition: all .6s ease-in-out;
+              -webkit-transition: all .6s ease-in-out;/* Safari 和 Chrome */
+              -moz-transition: all .5s; /* Firefox 4 */
+              -o-transition: all .5s;
+               transform-origin: 0% 50% 0px;
+              -ms-transform-origin: 0% 50% 0px;/* IE 9 */
+              -o-transform-origin: 0% 50% 0px;/* Opera */
+              -webkit-transform-origin: 0% 50% 0px;/* Safari 和 Chrome */
+              -moz-transform-origin: 0% 50% 0px;/* Firefox */
+              }
+             .photo_front .photo-wrap{/* .photo_front 是添加到 div.photo 的类 */
+                transform: translate(0px, 0px) rotateY(0deg);
+                -webkit-transform: translate(0px, 0px) rotateY(0deg);
+                -moz-transform: translate(0px, 0px) rotateY(0deg);
+                -o-transform: translate(0px, 0px) rotateY(0deg);
+                -ms-transform: translate(0px, 0px) rotateY(0deg);
+            }
+            .photo_back .photo-wrap{/* .photo_back 是添加到 div.photo 的类*/
+                transform: translate(260px, 0px) rotateY(180deg);
+                -webkit-transform: translate(260px, 0px) rotateY(180deg);
+                -moz-transform: translate(260px, 0px) rotateY(180deg);
+                -o-transform: translate(260px, 0px) rotateY(180deg);
+                -ms-transform: translate(260px, 0px) rotateY(180deg);
+            }
+            
+
+            /* 添加控制按钮的样式 */
+            @font-face{
+                font-family: 'icomoon';
+                src: url('images/icomoon.woff') format('woff');
+                font-weight: normal;
+                font-size: normal;
+            }
+            .nav{
+                position: absolute;
+                width: 80%;
+                left: 10%;
+                height: 30px;
+                line-height: 30px;
+                bottom: 20px;
+                z-index: 3;
+                text-align: center;
+            }
+            /* 普通样式 */
+            .nav .i{
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                background-color: #aaa;
+                text-align: center;
+                border-radius: 50px;
+                transform: scale(.5);
+                -webkit-transform: scale(.5);
+                -moz-transform: scale(.5);
+                -o-transform: scale(.5);
+                -ms-transform: scale(.5);
+
+                transition: all .5s;
+                -webkit-transition: all .5s;
+                -moz-transition: all .5s;
+                -o-transition: all .5s;
+            }
+            /* 设置并显示字体图标 */
+            .nav .i:after{
+                content: '\e965';
+                font-family: 'icomoon';
+                font-size: 80%;
+                display: inline-block;
+                line-height: 30px;
+                text-align: center;
+                color: #fff;
+                opacity: 0;
+            }
+            /* 选中样式 */
+            .nav .i_current{
+                transform: scale(1);
+                -webkit-transform: scale(1);
+                -moz-transform: scale(1);
+                -o-transform: scale(1);
+                -ms-transform: scale(1);
+            }
+            .nav .i_current:after{
+                opacity: 1;
+            }
+            /* 背面样式 */
+            .nav .i_back{
+                background-color: #555;
+                transform: rotateY(180deg);/*各种浏览器*/
+                -webkit-transform: rotateY(180deg);
+                -moz-transform: rotateY(180deg);
+                -o-transform: rotateY(180deg);
+                -ms-transform: rotateY(180deg);
+            } 
+
+             </style>
+
+         </head>
+
+         <body onselectstart="return false;"style="-moz-user-select:none;">
+ <!-- 2.改写视图，为模板字符串 -->
+          <div class="wrap" id="wrap">
+          </div>
+ <!-- photo 负责平移、旋转 
+
+  <div class="photo photo_center photo_front" onclick="turn(this)" 
+  id="photo_{{index}}">
+
+photo-wrap 负责翻转 
+ <div class="photo-wrap">
+<div class="side side-front">
+<p class="image"><img src="images2/{{img}}"/></p>
+<p class="caption">{{caption}}</p>
+</div>
+<div class="side side-back">
+  
+<p class="desc">  {{desc}}
+  </p>
+ 
+</div>
+</div>
+</div>
+</div> -->
+<script type="text/javascript" src="images/data.js"></script>
+<script type="text/javascript">
+// 3.通用函数，返回被选择的元素或元素集合
+            function g(selector){
+                return selector.substring(0, 1) == '.' ? document.getElementsByClassName(selector.substring(1)) : document.getElementById(selector.substring(1));
+            }
+//随机生成   0-20 支持取值范围。 random（[min,max]）
+function random(range)
+{
+     var max=Math.max(range[0],range[1]);
+     var min=Math.min(range[0],range[1]);
+     var diff=max-min ;//差值
+     var number=Math.round(Math.random()*diff) + min;
+     return number;
+}
+//4.输出所有的海报
+var data=data;
+function  addPhotos(){
+
+  /*var template=g('#wrap').innerHTML;
+  var html=[];
+  var nav=[];
+  for(s in data){//for(var s=0;s<length.length;s++)
+   var _html=template
+                      .replace('{{index}}',s)
+                      .replace('{{img}}',data[s].img)
+                      .replace('{{caption}}',data[s].caption)
+                      .replace('{{desc}}',data[s].desc);
+            html.push(_html);
+            nav.push('<span> id="nav_"'+s+'" onclick="turn(g(\'#photo_'+s+'\'))" class="i">&nbsp;</span>');
+          }html.push('<div class="nav">'+nav.join('')+'</div>');
+g('#wrap').innerHTML=html.join('');
+rsort(random([1,data.length]));*/
+
+          var _wrap = '';
+          var _nav = '';
+          for(var i = 0; i < data.length; i++){//for in 循环中的循环计数器是字符串，而不是数字它包含当前属性的名称或当前数组元素的索引
+         _wrap += '<div class="photo  photo_front" onclick="turn(this)" id="photo_' + (i + 1) + '"><div class="photo-wrap"><div class="side side-front"><p class="image"><img src="images/' + data[i].img + '"></p><p class="caption">' + data[i].caption + '</p></div><div class="side side-back"><p class="desc">' + data[i].desc + '</p></div></div></div></div>';
+                    
+         _nav += '<span id="nav_' + (i + 1) + '" onclick="turn(g(\'#photo_' + (i + 1) + '\'))" class="i"></span>';
+                }
+         var navigation = '<div class="nav">' + _nav + '</div>'
+         g('#wrap').innerHTML = _wrap + navigation;               
+        rsort(random([1, data.length]));
+}
+addPhotos();
+//6.计算左右分区的范围{left:{x:{min,max},y:[]},right:{}
+  function  range(){
+          var range = {
+                    left: {
+                        x: [], 
+                        y: []
+                    }, 
+                    right: {
+                        x: [], 
+                        y: []
+                    }
+                };
+                //获取最外围容器的宽度和高度
+                var wrap = {
+                    width: g('#wrap').clientWidth,
+                    height: g('#wrap').clientHeight
+                };
+                //获取每一张海报的宽度和高度，因为海报的大小都是一样的，所以取第一张
+                var photo = {
+                    width: g('.photo')[0].clientWidth,
+                    height: g('.photo')[0].clientHeight
+                };
+                //按照自己想要显示的区域进行计算，左右区域的高度 (top) 范围是一样的
+                range.left.x = [0 - photo.width / 4 + 130, wrap.width / 2 - photo.width * 5 / 4 + 130];
+                range.left.y = [0 - photo.height / 4 + 160, wrap.height - photo.height * 3 / 4 + 160];
+                range.right.x = [wrap.width / 2 + photo.width / 4 + 130, wrap.width - photo.width / 4 + 130];
+                range.right.y = range.left.y;
+
+                return range;
+   }
+
+//5.排序海报
+
+
+function rsort(n){
+   
+  var _photo = g('.photo');
+                var photos = [];
+                for(var i = 0; i < _photo.length; i++){
+                    _photo[i].className = 'photo photo_front';
+                    /*重排序之前去除所有图片样式*/
+                    _photo[i].style.left = '';
+                    _photo[i].style.top = '';
+                   
+                    _photo[i].style['transform'] = _photo[i].style['-webkit-transform'] = 'scale(1.3)';
+
+                    photos.push(_photo[i]);
+                }
+                var photo_center = g('#photo_' + n);
+                photo_center.className += ' photo_center';
+
+                photo_center = photos.splice(n-1, 1);//把photo_center从数组里删掉，splice() 方法会改变原始数组
+                // 把剩下的海报分为左右两部分
+                var photos_left = photos.splice(0, Math.ceil(photos.length / 2));
+                var photos_right = photos;
+                var ranges = range();
+                // 对左右区域的海报位置进行随机赋值
+                for(var j = 0; j < photos_left.length; j++){
+                    var photo = photos_left[j];
+                    photo.style.left = random(ranges.left.x) + 'px';
+                    photo.style.top = random(ranges.left.y) + 'px';
+                    photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate(' + random([-150, 150]) + 'deg) scale(1)';
+                }
+                for(var s = 0; s < photos_right.length; s++){
+                    var photo = photos_right[s];
+                    photo.style.left = random(ranges.right.x) + 'px';
+                    photo.style.top = random(ranges.right.y) + 'px';
+                    photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate(' + random([-150, 150]) + 'deg) scale(1)';
+                }
+                // 控制按钮处理
+                var navs = g('.i');
+                for(var k = 0; k < navs.length; k++){
+                    navs[k].className = 'i';
+                }
+                g('#nav_' + n).className += ' i_current';
+ }
+
+
+
+
+ //1.翻面控制
+
+function turn(elem){
+      var cls = elem.className;
+                var n = elem.id.split('_')[1];//var n = elem.id.substr(-1, 1)，但是不推荐 substr;
+                if(!/photo_center/.test(cls)){//判断当前点击的元素是不是 photo_center，不是的话不执行后面的翻转而进行海报排序
+                    return rsort(n);
+                }
+                if(/photo_front/.test(cls)){
+                    cls = cls.replace(/photo_front/, 'photo_back');
+                    g('#nav_' + n).className += ' i_back';//同时处理控制按钮
+                } else{
+                    cls = cls.replace(/photo_back/, 'photo_front');
+                    g('#nav_' + n).className = g('#nav_' + n).className.replace(/\s*i_back\s*/, ' ');//同时处理控制按钮
+                }
+
+                elem.className = cls;
+            }
+</script>
+ </body>
+</html>
